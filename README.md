@@ -73,6 +73,7 @@ foo@bar:~$ bin/example_main -b 4 --longName1=5 -c 3 -d 'hello'
 |                longName4|                   d|             char * |                   1|                   1|                         hello|                              Required option with required string argument|
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 -- END example_main --
+```
 
 <!-- ROADMAP -->
 ## Roadmap
