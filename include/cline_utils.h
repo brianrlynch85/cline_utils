@@ -401,7 +401,7 @@ namespace cline_utils
                   {
                      *(std::string *)this->opt_cfg[option_index].dataVal = optArgString;
                      found_option_type = true;
-                     std::cout << "char * " << this->opt_cfg[option_index].val << " " << optArgString << " " << *(std::string *)this->opt_cfg[option_index].dataVal << " " << optTypeString << " " << option_index << std::endl;
+                     //std::cout << "char * " << this->opt_cfg[option_index].val << " " << optArgString << " " << *(std::string *)this->opt_cfg[option_index].dataVal << " " << optTypeString << " " << option_index << std::endl;
                   }
                   else if(std::string(typeid(double).name()) == optTypeString) // It's a double
                   {
@@ -494,37 +494,39 @@ namespace cline_utils
       
          tp.PrintHeader();
          
-         for(auto itr: this->opt_cfg)
+         for(size_t option_index = 0; option_index < this->opt_cfg.size() - 1; ++option_index)
          {
-            tp << itr.name;
-            tp << char(itr.val);
-            tp << this->get_type_string(itr.type_string);
-            tp << itr.is_mandatory_opt;
-            tp << itr.has_arg;
 
-            std::string type_name = itr.type_string;
+            tp << this->opt_cfg[option_index].name;
+            tp << char(this->opt_cfg[option_index].val);
+            tp << this->get_type_string(this->opt_cfg[option_index].type_string);
+            tp << this->opt_cfg[option_index].is_mandatory_opt;
+            tp << this->opt_cfg[option_index].has_arg;
+
+            std::string type_name = this->opt_cfg[option_index].type_string;
             if("Pc" == type_name)
             {
-               tp << *(std::string *)itr.dataVal;
+               tp << *(std::string *)this->opt_cfg[option_index].dataVal;
             }
             else if("d" == type_name)
             {
-               tp << *(double *)itr.dataVal;
+               tp << *(double *)this->opt_cfg[option_index].dataVal;
             }
             else if("f" == type_name)
             {
-               tp << *(float *)itr.dataVal;
+               tp << *(float *)this->opt_cfg[option_index].dataVal;
             }
             else if("i" == type_name)
             {
-               tp << *(int *)itr.dataVal;
+               tp << *(int *)this->opt_cfg[option_index].dataVal;
             }
             else
             {
                tp << "None ";
             }
 
-            tp << itr.desc_string;
+            tp << this->opt_cfg[option_index].desc_string;
+
          }
          tp.PrintFooter();
       }
@@ -538,51 +540,52 @@ namespace cline_utils
       */
      void print_input_summary()
      {  
-        bprinter::TablePrinter tp(&std::cout);
-        tp.AddColumn("Option Long Name ", 25);
-        tp.AddColumn("Option Character ", 20);
-        tp.AddColumn("Argument Type ", 20);
-        tp.AddColumn("Option Required ", 20);
-        tp.AddColumn("Argument Required ", 20);
-        tp.AddColumn("Current Argument Value ", 30);
-        tp.AddColumn("Description ", 75);
+         bprinter::TablePrinter tp(&std::cerr);
+         tp.AddColumn("Option Long Name ", 25);
+         tp.AddColumn("Option Character ", 20);
+         tp.AddColumn("Argument Type ", 20);
+         tp.AddColumn("Option Required ", 20);
+         tp.AddColumn("Argument Required ", 20);
+         tp.AddColumn("Current Argument Value ", 30);
+         tp.AddColumn("Description ", 75);
      
-        tp.PrintHeader();
+         tp.PrintHeader();
 
-        for(auto itr: this->opt_cfg)
-        {
-           tp << itr.name;
-           tp << char(itr.val);
-           tp << this->get_type_string(itr.type_string);
-           tp << itr.is_mandatory_opt;
-           tp << itr.has_arg;
+         for(size_t option_index = 0; option_index < this->opt_cfg.size() - 1; ++option_index)
+         {
 
-           std::string type_name = itr.type_string;
-           if("Pc" == type_name)
-           {
-              tp << *(std::string *)itr.dataVal;
-           }
-           else if("d" == type_name)
-           {
-              tp << *(double *)itr.dataVal;
-           }
-           else if("f" == type_name)
-           {
-              tp << *(float *)itr.dataVal;
-           }
-           else if("i" == type_name)
-           {
-              tp << *(int *)itr.dataVal;
-           }
-           else
-           {
-              tp << "None ";
-           }
+            tp << this->opt_cfg[option_index].name;
+            tp << char(this->opt_cfg[option_index].val);
+            tp << this->get_type_string(this->opt_cfg[option_index].type_string);
+            tp << this->opt_cfg[option_index].is_mandatory_opt;
+            tp << this->opt_cfg[option_index].has_arg;
 
-           tp << itr.desc_string;
-        }
-        tp.set_flush_right();
-        tp.PrintFooter();
+            std::string type_name = this->opt_cfg[option_index].type_string;
+            if("Pc" == type_name)
+            {
+               tp << *(std::string *)this->opt_cfg[option_index].dataVal;
+            }
+            else if("d" == type_name)
+            {
+               tp << *(double *)this->opt_cfg[option_index].dataVal;
+            }
+            else if("f" == type_name)
+            {
+               tp << *(float *)this->opt_cfg[option_index].dataVal;
+            }
+            else if("i" == type_name)
+            {
+               tp << *(int *)this->opt_cfg[option_index].dataVal;
+            }
+            else
+            {
+               tp << "None ";
+            }
+
+            tp << this->opt_cfg[option_index].desc_string;
+
+         }
+         tp.PrintFooter();
      }
 
    }; // End class CommandLineParser

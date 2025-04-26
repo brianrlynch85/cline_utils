@@ -12,7 +12,7 @@
 
 int main(int argc, char** argv)
 {
-   std::cout << "-- example_main --" << std::endl;
+   std::cout << "-- BEGIN example_main --" << std::endl;
 
    double parameter1D = std::nan("1"),
           parameter2D = 3.14;
@@ -20,7 +20,7 @@ int main(int argc, char** argv)
    int helpFlag    = 0,
        parameter3I = 100;
 
-   std::string parameter4S("gg");
+   std::string parameter4S("");
 
    // Command line parser configuration options
    // h is reserved as the help option
@@ -45,6 +45,7 @@ int main(int argc, char** argv)
       std::cerr << e.what();
       cline.print_usage();
    }
-   
+
+   std::cout << "-- END example_main --" << std::endl;
    return(0);
 }
