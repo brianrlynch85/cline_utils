@@ -40,23 +40,39 @@ Consolidate compiler generated dependencies of target bprinterTest
 
 ```console
 foo@bar:~$ bin/example_driver
-validate_required_options(...) - Missing required option in command line args: -a
+-- BEGIN example_main --
+******************************************************************************************
+check_required_options(...) - Missing required option in command line args: -a
+******************************************************************************************
 
-------------------------------------------------------
-General Usage: bin/example_main -option_character <option_argument>
-------------------------------------------------------
-------------------------------------------------------
-Option & Argument Table
-------------------------------------------------------
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|        Option Long Name |   Option Character |      Argument Type |    Option Required |  Argument Required |                                              Description [Physical Units] |
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|     name_for_parameter1D|                   a|             double |                   1|                   1|             Required option with required double argument [physical units]|
-|     name_for_parameter2D|                   b|             double |                   1|                   1|                           Required option with required double argument []|
-|     name_for_parameter3I|                   c|                int |                   0|                   1|                   Optional option with a required integer arugment if used|
-|     name_for_parameter4S|                   d|             char * |                   1|                   1|                              Required option with required string argument|
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+--------------------------------------------------------------
+foo@bar:~$ bin/example_main -option_character <argument_value>
+--------------------------------------------------------------
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|        Option Long Name |   Option Character |      Argument Type |    Option Required |  Argument Required |       Argument Default Value |                                                               Description |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                     help|                   h|                int |                   0|                   0|                             0|                                        Optional help option that must be h|
+|                longName1|                   a|             double |                   1|                   1|                           nan|             Required option with required double argument [physical units]|
+|                longName2|                   b|             double |                   1|                   1|3.140000000000000124344978758*|                           Required option with required double argument []|
+|                longName3|                   c|                int |                   0|                   1|                           100|                   Optional option with a required integer arugment if used|
+|                longName4|                   d|             char * |                   1|                   1|                              |                              Required option with required string argument|
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+-- END example_main --
 ```
+
+```console
+foo@bar:~$ bin/example_main -b 4 --longName1=5 -c 3 -d 'hello'
+-- BEGIN example_main --
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|        Option Long Name |   Option Character |      Argument Type |    Option Required |  Argument Required |       Current Argument Value |                                                               Description |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                     help|                   h|                int |                   0|                   0|                             0|                                        Optional help option that must be h|
+|                longName1|                   a|             double |                   1|                   1|5.000000000000000000000000000*|             Required option with required double argument [physical units]|
+|                longName2|                   b|             double |                   1|                   1|4.000000000000000000000000000*|                           Required option with required double argument []|
+|                longName3|                   c|                int |                   0|                   1|                             3|                   Optional option with a required integer arugment if used|
+|                longName4|                   d|             char * |                   1|                   1|                         hello|                              Required option with required string argument|
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+-- END example_main --
 
 <!-- ROADMAP -->
 ## Roadmap
