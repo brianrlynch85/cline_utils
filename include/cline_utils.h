@@ -172,6 +172,73 @@ namespace cline_utils
 
       /************************************************************************/
       /*
+      * \brief Create a CommandLineParser object. Options MUST be added later!
+      *
+      *     @param[in] int argc: Integer variable storing number of command line arguments (including executable name)    
+      *     @param[in] char **argv: Array of character pointers listing all the arguments    
+      *     @return None.
+      * 
+      */
+     CommandLineParser(
+      int argc,
+      char **argv
+                    )
+         : argc_(argc), argv_(argv)
+      {
+         this->opt_cfg.push_back({NULL, 0, NULL, 0, required_option, "", NULL, ""});
+      }
+
+      /************************************************************************/
+      /*
+      * \brief Add an option to the internal option structure
+      *
+      *     @param[in] cline_utils::option_longer &option_: option_longer struct
+      *     @return None.
+      * 
+      */
+      void add_option(const cline_utils::option_longer &option_)
+      {
+         this->opt_cfg.pop_back(); // Removes current back element of zeros that is required per getopt_long
+         this->opt_cfg.push_back(option_);
+         this->opt_cfg.push_back({NULL, 0, NULL, 0, required_option, "", NULL, ""});
+      }
+
+      /************************************************************************/
+      /*
+      * \brief Add a bunch of options to the internal option structure
+      *
+      *     @param[in] std::vector<cline_utils::option_longer> &option_: option_longer structs
+      *     @return None.
+      * 
+      */
+      void add_options(const std::vector<cline_utils::option_longer> &options_)
+      {
+         for(size_t i = 0; i < options_.size(); ++i)
+         {
+            this->add_option(options_[i]);
+         }
+      }
+
+      /************************************************************************/
+      /*
+      * \brief Create a CommandLineParser object.
+      *
+      *     @param[in] cline_utils::option_longer &option_: option_longer struct
+      *     @return None.
+      * 
+      */
+      void delete_all_options()
+      {
+         while(false == this->opt_cfg.empty())
+         {
+            this->opt_cfg.pop_back();
+         }
+         // Add current back element of zeros that is required per getopt_long
+         this->opt_cfg.push_back({NULL, 0, NULL, 0, required_option, "", NULL, ""});
+      }
+
+      /************************************************************************/
+      /*
       * \brief Ensure that all required_options are present
       *
       *     @return None
@@ -538,8 +605,8 @@ namespace cline_utils
       *     @return None.
       * 
       */
-     void print_input_summary()
-     {  
+      void print_input_summary()
+      {  
          bprinter::TablePrinter tp(&std::cerr);
          tp.AddColumn("Option Long Name ", 25);
          tp.AddColumn("Option Character ", 20);
@@ -586,7 +653,7 @@ namespace cline_utils
 
          }
          tp.PrintFooter();
-     }
+      }
 
    }; // End class CommandLineParser
 }
