@@ -75,6 +75,25 @@ foo@bar:~$ bin/example_main -b 4 --longName1=5 -c 3 -d 'hello'
 -- END example_main --
 ```
 
+```console
+foo@bar:~$ ctest
+Test project /home/brian/projects/plasmas/ext/cline_utils/build
+    Start 1: ctest_optlonger_config
+1/5 Test #1: ctest_optlonger_config .............   Passed    0.00 sec
+    Start 2: ctest_optlonger_missing_arg
+2/5 Test #2: ctest_optlonger_missing_arg ........   Passed    0.00 sec
+    Start 3: ctest_optlonger_missing_opt
+3/5 Test #3: ctest_optlonger_missing_opt ........   Passed    0.00 sec
+    Start 4: ctest_optlonger_unrecognized_opt
+4/5 Test #4: ctest_optlonger_unrecognized_opt ...   Passed    0.00 sec
+    Start 5: ctest_optlonger_duplicate
+5/5 Test #5: ctest_optlonger_duplicate ..........   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =   0.01 sec
+```
+
 <!-- ROADMAP -->
 ## Roadmap
 

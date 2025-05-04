@@ -229,7 +229,7 @@ namespace cline_utils
       */
       void delete_all_options()
       {
-         while(false == this->opt_cfg.empty())
+         while(1 < this->opt_cfg.size())
          {
             this->opt_cfg.pop_back();
          }
